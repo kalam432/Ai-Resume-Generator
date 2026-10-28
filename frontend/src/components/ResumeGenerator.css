@@ -1,0 +1,425 @@
+/**
+ * Resume Generator Styles
+ * 
+ * Comprehensive styling for:
+ * - Resume form with multiple sections
+ * - Form validation and error messages
+ * - Dynamic field management (add/remove)
+ * - Generated resume preview
+ * - Copy to clipboard functionality
+ */
+
+.resume-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+/* ============================================================================
+ * Form Section
+ * ============================================================================ */
+
+.form-section {
+  background: white;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.form-section h2 {
+  color: #667eea;
+  font-size: 1.8em;
+  margin: 0 0 10px 0;
+}
+
+.form-section > p {
+  color: #666;
+  margin: 0 0 20px 0;
+  font-size: 0.95em;
+}
+
+/* Form Fieldset */
+.form-fieldset {
+  border: none;
+  padding: 20px 0;
+  border-top: 1px solid #e5e7eb;
+  margin: 0;
+}
+
+.form-fieldset:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+
+.form-fieldset legend {
+  color: #333;
+  font-weight: 600;
+  font-size: 1.1em;
+  padding: 10px 0;
+}
+
+/* Form Groups */
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  align-items: flex-start;
+}
+
+.form-row .form-group {
+  margin-bottom: 0;
+}
+
+.form-row .btn-remove {
+  align-self: center;
+  margin-top: 22px;
+}
+
+.form-array-item {
+  background: #f9fafb;
+  padding: 15px;
+  border-radius: 6px;
+  border-left: 3px solid #667eea;
+  margin-bottom: 15px;
+}
+
+/* Labels and Inputs */
+.form-group label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 6px;
+  font-size: 0.95em;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.95em;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Character Count */
+.char-count {
+  font-size: 0.8em;
+  color: #999;
+  margin-top: 4px;
+}
+
+/* Error Messages */
+.error-message {
+  color: #dc2626;
+  font-size: 0.85em;
+  margin-top: 4px;
+  display: block;
+}
+
+.api-error {
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  color: #991b1b;
+  padding: 12px;
+  border-radius: 6px;
+  margin: 20px 0;
+  font-size: 0.95em;
+}
+
+/* Buttons */
+.btn-add,
+.btn-remove,
+.btn-submit {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.95em;
+  transition: all 0.2s;
+}
+
+.btn-add {
+  background: #f0f4ff;
+  color: #667eea;
+  border: 1px solid #667eea;
+  margin-top: 10px;
+}
+
+.btn-add:hover {
+  background: #667eea;
+  color: white;
+}
+
+.btn-remove {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 8px 12px;
+  font-size: 1.2em;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+.btn-remove:hover {
+  background: #fca5a5;
+}
+
+.btn-submit {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  width: 100%;
+  padding: 14px;
+  font-size: 1em;
+  margin-top: 30px;
+}
+
+.btn-submit:hover:not(:disabled) {
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* ============================================================================
+ * Preview Section
+ * ============================================================================ */
+
+.preview-section {
+  background: white;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  overflow: hidden;
+}
+
+.preview-header {
+  margin-bottom: 20px;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 15px;
+}
+
+.preview-header h3 {
+  color: #2e7d32;
+  margin: 0 0 8px 0;
+  font-size: 1.2em;
+}
+
+.generation-message {
+  color: #666;
+  font-size: 0.9em;
+  margin: 0;
+  font-style: italic;
+}
+
+.preview-content {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 15px;
+  background: #f9fafb;
+  border-radius: 6px;
+  padding: 15px;
+}
+
+.resume-text {
+  margin: 0;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85em;
+  line-height: 1.6;
+  color: #333;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.preview-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn-copy {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.95em;
+  transition: all 0.2s;
+}
+
+.btn-copy:hover {
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  transform: translateY(-2px);
+}
+
+.copy-feedback {
+  font-size: 0.9em;
+  font-weight: 600;
+  color: #2e7d32;
+}
+
+/* ============================================================================
+ * Responsive Design
+ * ============================================================================ */
+
+@media (max-width: 1200px) {
+  .resume-container {
+    grid-template-columns: 1fr;
+  }
+
+  .form-section,
+  .preview-section {
+    max-height: 100%;
+  }
+
+  .form-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .resume-container {
+    gap: 15px;
+  }
+
+  .form-section,
+  .preview-section {
+    padding: 20px;
+    max-height: none;
+  }
+
+  .form-section h2 {
+    font-size: 1.5em;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-row .btn-remove {
+    margin-top: 0;
+    align-self: flex-start;
+  }
+
+  .form-fieldset legend {
+    font-size: 1em;
+  }
+
+  .btn-submit {
+    padding: 12px;
+    font-size: 0.95em;
+  }
+
+  .resume-text {
+    font-size: 0.8em;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-section,
+  .preview-section {
+    padding: 15px;
+  }
+
+  .form-section h2 {
+    font-size: 1.3em;
+  }
+
+  .form-section > p {
+    font-size: 0.9em;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    font-size: 16px; /* Prevents zoom on mobile */
+  }
+
+  .form-fieldset {
+    padding: 15px 0;
+  }
+
+  .form-array-item {
+    padding: 12px;
+  }
+
+  .btn-remove {
+    width: 36px;
+    height: 36px;
+  }
+
+  .preview-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .btn-copy {
+    width: 100%;
+  }
+
+  .resume-text {
+    font-size: 0.75em;
+    line-height: 1.5;
+  }
+}
+
+/* ============================================================================
+ * Scrollbar Styling (Webkit browsers)
+ * ============================================================================ */
+
+.form-section::-webkit-scrollbar,
+.preview-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.form-section::-webkit-scrollbar-track,
+.preview-content::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.form-section::-webkit-scrollbar-thumb,
+.preview-content::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.form-section::-webkit-scrollbar-thumb:hover,
+.preview-content::-webkit-scrollbar-thumb:hover {
+  background: #667eea;
+}

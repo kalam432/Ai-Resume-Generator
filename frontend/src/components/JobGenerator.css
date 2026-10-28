@@ -1,0 +1,431 @@
+/**
+ * Job Generator Styles
+ * 
+ * Comprehensive styling for:
+ * - Job form with required/optional skills sections
+ * - Form validation and error messages
+ * - Dynamic field management (add/remove)
+ * - Generated job description preview
+ * - Copy to clipboard functionality
+ * 
+ * Mirrors ResumeGenerator.css for consistency
+ */
+
+.job-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+/* ============================================================================
+ * Form Section
+ * ============================================================================ */
+
+.job-form {
+  /* Inherits from .form-section */
+}
+
+.job-container .form-section {
+  background: white;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.job-container .form-section h2 {
+  color: #667eea;
+  font-size: 1.8em;
+  margin: 0 0 10px 0;
+}
+
+.job-container .form-section > p {
+  color: #666;
+  margin: 0 0 20px 0;
+  font-size: 0.95em;
+}
+
+/* Form Fieldset */
+.job-container .form-fieldset {
+  border: none;
+  padding: 20px 0;
+  border-top: 1px solid #e5e7eb;
+  margin: 0;
+}
+
+.job-container .form-fieldset:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+
+.job-container .form-fieldset legend {
+  color: #333;
+  font-weight: 600;
+  font-size: 1.1em;
+  padding: 10px 0;
+}
+
+/* Form Groups */
+.job-container .form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.job-container .form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  align-items: flex-start;
+}
+
+.job-container .form-row .form-group {
+  margin-bottom: 0;
+}
+
+.job-container .form-row .btn-remove {
+  align-self: center;
+  margin-top: 22px;
+}
+
+.job-container .form-array-item {
+  background: #f9fafb;
+  padding: 15px;
+  border-radius: 6px;
+  border-left: 3px solid #667eea;
+  margin-bottom: 15px;
+}
+
+/* Labels and Inputs */
+.job-container .form-group label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 6px;
+  font-size: 0.95em;
+}
+
+.job-container .form-group input,
+.job-container .form-group textarea,
+.job-container .form-group select {
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.95em;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.job-container .form-group input:focus,
+.job-container .form-group textarea:focus,
+.job-container .form-group select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.job-container .form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Character Count */
+.job-container .char-count {
+  font-size: 0.8em;
+  color: #999;
+  margin-top: 4px;
+}
+
+/* Error Messages */
+.job-container .error-message {
+  color: #dc2626;
+  font-size: 0.85em;
+  margin-top: 4px;
+  display: block;
+}
+
+.job-container .api-error {
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  color: #991b1b;
+  padding: 12px;
+  border-radius: 6px;
+  margin: 20px 0;
+  font-size: 0.95em;
+}
+
+/* Buttons */
+.job-container .btn-add,
+.job-container .btn-remove,
+.job-container .btn-submit {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.95em;
+  transition: all 0.2s;
+}
+
+.job-container .btn-add {
+  background: #f0f4ff;
+  color: #667eea;
+  border: 1px solid #667eea;
+  margin-top: 10px;
+}
+
+.job-container .btn-add:hover {
+  background: #667eea;
+  color: white;
+}
+
+.job-container .btn-remove {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 8px 12px;
+  font-size: 1.2em;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+.job-container .btn-remove:hover {
+  background: #fca5a5;
+}
+
+.job-container .btn-submit {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  width: 100%;
+  padding: 14px;
+  font-size: 1em;
+  margin-top: 30px;
+}
+
+.job-container .btn-submit:hover:not(:disabled) {
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  transform: translateY(-2px);
+}
+
+.job-container .btn-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* ============================================================================
+ * Preview Section
+ * ============================================================================ */
+
+.job-container .preview-section {
+  background: white;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  overflow: hidden;
+}
+
+.job-container .preview-header {
+  margin-bottom: 20px;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 15px;
+}
+
+.job-container .preview-header h3 {
+  color: #2e7d32;
+  margin: 0 0 8px 0;
+  font-size: 1.2em;
+}
+
+.job-container .generation-message {
+  color: #666;
+  font-size: 0.9em;
+  margin: 0;
+  font-style: italic;
+}
+
+.job-container .preview-content {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 15px;
+  background: #f9fafb;
+  border-radius: 6px;
+  padding: 15px;
+}
+
+.job-container .job-text {
+  margin: 0;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85em;
+  line-height: 1.6;
+  color: #333;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.job-container .preview-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.job-container .btn-copy {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.95em;
+  transition: all 0.2s;
+}
+
+.job-container .btn-copy:hover {
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  transform: translateY(-2px);
+}
+
+.job-container .copy-feedback {
+  font-size: 0.9em;
+  font-weight: 600;
+  color: #2e7d32;
+}
+
+/* ============================================================================
+ * Responsive Design
+ * ============================================================================ */
+
+@media (max-width: 1200px) {
+  .job-container {
+    grid-template-columns: 1fr;
+  }
+
+  .job-container .form-section,
+  .job-container .preview-section {
+    max-height: 100%;
+  }
+
+  .job-container .form-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .job-container {
+    gap: 15px;
+  }
+
+  .job-container .form-section,
+  .job-container .preview-section {
+    padding: 20px;
+    max-height: none;
+  }
+
+  .job-container .form-section h2 {
+    font-size: 1.5em;
+  }
+
+  .job-container .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .job-container .form-row .btn-remove {
+    margin-top: 0;
+    align-self: flex-start;
+  }
+
+  .job-container .form-fieldset legend {
+    font-size: 1em;
+  }
+
+  .job-container .btn-submit {
+    padding: 12px;
+    font-size: 0.95em;
+  }
+
+  .job-container .job-text {
+    font-size: 0.8em;
+  }
+}
+
+@media (max-width: 480px) {
+  .job-container .form-section,
+  .job-container .preview-section {
+    padding: 15px;
+  }
+
+  .job-container .form-section h2 {
+    font-size: 1.3em;
+  }
+
+  .job-container .form-section > p {
+    font-size: 0.9em;
+  }
+
+  .job-container .form-group input,
+  .job-container .form-group textarea,
+  .job-container .form-group select {
+    font-size: 16px; /* Prevents zoom on mobile */
+  }
+
+  .job-container .form-fieldset {
+    padding: 15px 0;
+  }
+
+  .job-container .form-array-item {
+    padding: 12px;
+  }
+
+  .job-container .btn-remove {
+    width: 36px;
+    height: 36px;
+  }
+
+  .job-container .preview-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .job-container .btn-copy {
+    width: 100%;
+  }
+
+  .job-container .job-text {
+    font-size: 0.75em;
+    line-height: 1.5;
+  }
+}
+
+/* ============================================================================
+ * Scrollbar Styling (Webkit browsers)
+ * ============================================================================ */
+
+.job-container .form-section::-webkit-scrollbar,
+.job-container .preview-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.job-container .form-section::-webkit-scrollbar-track,
+.job-container .preview-content::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.job-container .form-section::-webkit-scrollbar-thumb,
+.job-container .preview-content::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.job-container .form-section::-webkit-scrollbar-thumb:hover,
+.job-container .preview-content::-webkit-scrollbar-thumb:hover {
+  background: #667eea;
+}
